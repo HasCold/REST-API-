@@ -3,6 +3,8 @@
 const express = require("express");
 const app = express(); // app Means it is executable function of express
 const Products_routes = require("./routes/product");
+const connectDb = require("./db/connect");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,6 +17,7 @@ app.use("/api/products", Products_routes);
 
 const start = async () => {
     try{
+        await connectDb(process.env.SECRET_KEY);
         app.listen(PORT, () => {
            console.log(`${PORT} port successfully connected to server`);
         });
